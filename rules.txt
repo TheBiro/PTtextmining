@@ -1,0 +1,468 @@
+# Lista de regras para remoção de sufixos em português proposto em: http://www.inf.ufrgs.br/~viviane/rslp/
+# Lista retirada de: http://alvinalexander.com/java/jwarehouse/lucene/contrib/analyzers/common/src/resources/org/apache/lucene/analysis/pt/portuguese.rslp.shtml
+# Algoritmo implementado em python: http://www.nltk.org/_modules/nltk/stem/rslp.html
+
+           #--- OBS ---#
+# Falta a remoção de acentos (fácil de fazer)
+# Precisa mudar o encoding para corrigir os caracteres
+
+
+#  Steps file for the RSLP stemmer.
+
+# Step 1: Plural Reduction
+{  "Plural", 3, 1, {"s"},
+  # bons -> bom 
+  {"ns",1,"m"},
+  # balÃµes -> balÃ£o
+  {"Ãµes",3,"Ã£o"},
+  # capitÃ£es -> capitÃ£o
+  {"Ã£es",1,"Ã£o",{"mÃ£es"}},
+  # normais -> normal
+  {"ais",1,"al",{"cais","mais"}},
+  # papÃ©is -> papel
+  {"Ã©is",2,"el"},
+  # amÃ¡veis -> amÃ¡vel
+  {"eis",2,"el"},
+  # lenÃ§Ã³is -> lenÃ§ol
+  {"Ã³is",2,"ol"},
+  # barris -> barril
+  {"is",2,"il",{"lÃ¡pis","cais","mais","crÃºcis","biquÃ­nis","pois","depois","dois","leis"}},
+  # males -> mal
+  {"les",3,"l"},
+  # mares -> mar
+  {"res",3,"r", {"Ã¡rvores"}},
+  # casas -> casa
+  {"s",2,"",{"aliÃ¡s","pires","lÃ¡pis","cais","mais","mas","menos","fÃ©rias","fezes","pÃªsames","crÃºcis","gÃ¡s","atrÃ¡s","moisÃ©s","atravÃ©s","convÃ©s","Ãªs","paÃ­s","apÃ³s","ambas","ambos","messias", "depois"}}};
+
+# Step 2: Adverb Reduction
+{  "Adverb", 0, 0, {},
+  # felizmente -> feliz
+  {"mente",4,"",{"experimente"}}};
+  
+# Step 3: Feminine Reduction
+{  "Feminine", 3, 1, {"a","Ã£"},
+  # chefona -> chefÃ£o
+  {"ona",3,"Ã£o",{"abandona","lona","iona","cortisona","monÃ³tona","maratona","acetona","detona","carona"}},
+  # vilÃ£ -> vilÃ£o
+  {"Ã£",2,"Ã£o",{"amanhÃ£","arapuÃ£","fÃ£","divÃ£"}},
+  # professora -> professor
+  {"ora",3,"or"},
+  # americana -> americano
+  {"na",4,"no",{"carona","abandona","lona","iona","cortisona","monÃ³tona","maratona","acetona","detona","guiana","campana","grana","caravana","banana","paisana"}},
+  # sozinha -> sozinho
+  {"inha",3,"inho",{"rainha","linha","minha"}},
+  # inglesa -> inglÃªs
+  {"esa",3,"Ãªs",{"mesa","obesa","princesa","turquesa","ilesa","pesa","presa"}},
+  # famosa -> famoso
+  {"osa",3,"oso",{"mucosa","prosa"}},
+  # manÃ­aca -> manÃ­aco
+  {"Ã­aca",3,"Ã­aco"},
+  # prÃ¡tica -> prÃ¡tico
+  {"ica",3,"ico",{"dica"}},
+  # cansada -> cansado
+  {"ada",2,"ado",{"pitada"}},
+  # mantida -> mantido
+  {"ida",3,"ido",{"vida","dÃºvida"}},
+  {"Ã­da",3,"ido",{"recaÃ­da","saÃ­da"}},
+  # prima -> primo
+  {"ima",3,"imo",{"vÃ­tima"}},
+  # passiva -> passivo
+  {"iva",3,"ivo",{"saliva","oliva"}},
+  # primeira -> primeiro
+  {"eira",3,"eiro",{"beira","cadeira","frigideira","bandeira","feira","capoeira","barreira","fronteira","besteira","poeira"}}};
+
+# Step 4: Augmentative/Diminutive Reduction
+{  "Augmentative", 0, 1, {},
+  # cansadÃ­ssimo -> cansad
+  {"dÃ­ssimo",5},
+  # amabilÃ­ssimo -> ama
+  {"abilÃ­ssimo",5},
+  # fortÃ­ssimo -> fort
+  {"Ã­ssimo",3},
+  {"Ã©simo",3},
+  # chiquÃ©rrimo -> chiqu
+  {"Ã©rrimo",4},
+  # pezinho -> pe
+  {"zinho",2},
+  # maluquinho -> maluc
+  {"quinho",4,"c"},
+  # amiguinho -> amig
+  {"uinho",4},
+  # cansadinho -> cansad
+  {"adinho",3},
+  # carrinho -> carr
+  {"inho",3,"",{"caminho","cominho"}},
+  # grandalhÃ£o -> grand
+  {"alhÃ£o",4},
+  # dentuÃ§a -> dent
+  {"uÃ§a",4},
+  # ricaÃ§o -> ric
+  {"aÃ§o",4,"",{"antebraÃ§o"}},
+  {"aÃ§a",4},
+  # casadÃ£o -> cans
+  {"adÃ£o",4}, 
+  {"idÃ£o",4},
+  # corpÃ¡zio -> corp
+  {"Ã¡zio",3,"",{"topÃ¡zio"}},
+  # pratarraz -> prat
+  {"arraz",4},
+  {"zarrÃ£o",3},
+  {"arrÃ£o",4},
+  # bocarra -> boc
+  {"arra",3},
+  # calorzÃ£o -> calor
+  {"zÃ£o",2,"",{"coalizÃ£o"}},
+  # meninÃ£o -> menin
+  {"Ã£o",3,"",{"camarÃ£o","chimarrÃ£o","canÃ§Ã£o","coraÃ§Ã£o","embriÃ£o","grotÃ£o","glutÃ£o","ficÃ§Ã£o","fogÃ£o","feiÃ§Ã£o","furacÃ£o","gamÃ£o","lampiÃ£o","leÃ£o","macacÃ£o","naÃ§Ã£o","Ã³rfÃ£o","orgÃ£o","patrÃ£o","portÃ£o","quinhÃ£o","rincÃ£o","traÃ§Ã£o","falcÃ£o","espiÃ£o","mamÃ£o","foliÃ£o","cordÃ£o","aptidÃ£o","campeÃ£o","colchÃ£o","limÃ£o","leilÃ£o","melÃ£o","barÃ£o","milhÃ£o","bilhÃ£o","fusÃ£o","cristÃ£o","ilusÃ£o","capitÃ£o","estaÃ§Ã£o","senÃ£o"}}};
+
+# Step 5: Noun Suffix Reduction
+{  "Noun", 0, 0, {},
+  # existencialista -> exist
+  {"encialista",4},
+  # minimalista -> minim
+  {"alista",5},
+  # contagem -> cont
+  {"agem",3,"",{"coragem","chantagem","vantagem","carruagem"}},
+  # gerenciamento -> gerenc
+  {"iamento",4},
+  # monitoramento -> monitor
+  {"amento",3,"",{"firmamento","fundamento","departamento"}},
+  # nascimento -> nasc
+  {"imento",3},
+  {"mento",6,"",{"firmamento","elemento","complemento","instrumento","departamento"}},
+  # comercializado -> comerci
+  {"alizado",4},
+  # traumatizado -> traum
+  {"atizado",4},
+  {"tizado",4,"",{"alfabetizado"}},
+  # alfabetizado -> alfabet
+  {"izado",5,"",{"organizado","pulverizado"}},
+  # associativo -> associ
+  {"ativo",4,"",{"pejorativo","relativo"}},
+  # contraceptivo -> contracep
+  {"tivo",4,"",{"relativo"}},
+  # esportivo -> esport
+  {"ivo",4,"",{"passivo","possessivo","pejorativo","positivo"}},
+  # abalado -> abal
+  {"ado",2,"",{"grado"}},
+  # impedido -> imped
+  {"ido",3,"",{"cÃ¢ndido","consolido","rÃ¡pido","decido","tÃ­mido","duvido","marido"}},
+  # ralador -> ral
+  {"ador",3},
+  # entendedor -> entend
+  {"edor",3},
+  # cumpridor -> cumpr
+  {"idor",4,"",{"ouvidor"}},
+  {"dor",4,"",{"ouvidor"}},
+  {"sor",4,"",{"assessor"}},
+  {"atoria",5},
+  {"tor",3,"",{"benfeitor","leitor","editor","pastor","produtor","promotor","consultor"}},
+  {"or",2,"",{"motor","melhor","redor","rigor","sensor","tambor","tumor","assessor","benfeitor","pastor","terior","favor","autor"}},
+  # comparabilidade -> compar
+  {"abilidade",5},
+  # abolicionista -> abol
+  {"icionista",4},
+  # intervencionista -> interven
+  {"cionista",5},
+  {"ionista",5},
+  {"ionar",5},
+  # profissional -> profiss
+  {"ional",4},
+  # referÃªncia -> refer
+  {"Ãªncia",3},
+  # repugnÃ¢ncia -> repugn
+  {"Ã¢ncia",4,"",{"ambulÃ¢ncia"}},
+  # abatedouro -> abat
+  {"edouro",3},
+  # fofoqueiro -> fofoc
+  {"queiro",3,"c"},
+  {"adeiro",4,"",{"desfiladeiro"}},
+  # brasileiro -> brasil
+  {"eiro",3,"",{"desfiladeiro","pioneiro","mosteiro"}},
+  {"uoso",3},
+  # gostoso -> gost
+  {"oso",3,"",{"precioso"}},
+  # comercializaÃ§ -> comerci
+  {"alizaÃ§",5},
+  {"atizaÃ§",5},
+  {"tizaÃ§",5},
+  {"izaÃ§",5,"",{"organizaÃ§"}},
+  # alegaÃ§ -> aleg
+  {"aÃ§",3,"",{"equaÃ§","relaÃ§"}},
+  # aboliÃ§ -> abol
+  {"iÃ§",3,"",{"eleiÃ§"}},
+  # anedotÃ¡rio -> anedot
+  {"Ã¡rio",3,"",{"voluntÃ¡rio","salÃ¡rio","aniversÃ¡rio","diÃ¡rio","lionÃ¡rio","armÃ¡rio"}},
+  {"atÃ³rio",3},
+  {"rio",5,"",{"voluntÃ¡rio","salÃ¡rio","aniversÃ¡rio","diÃ¡rio","compulsÃ³rio","lionÃ¡rio","prÃ³prio","stÃ©rio","armÃ¡rio"}},
+  # ministÃ©rio -> minist
+  {"Ã©rio",6},
+  # chinÃªs -> chin
+  {"Ãªs",4},
+  # beleza -> bel
+  {"eza",3},
+  # rigidez -> rigid
+  {"ez",4},
+  # parentesco -> parent
+  {"esco",4},
+  # ocupante -> ocup
+  {"ante",2,"",{"gigante","elefante","adiante","possante","instante","restaurante"}},
+  # bombÃ¡stico -> bomb
+  {"Ã¡stico",4,"",{"eclesiÃ¡stico"}},
+  {"alÃ­stico",3},
+  {"Ã¡utico",4},
+  {"Ãªutico",4},
+  {"tico",3,"",{"polÃ­tico","eclesiÃ¡stico","diagnostico","prÃ¡tico","domÃ©stico","diagnÃ³stico","idÃªntico","alopÃ¡tico","artÃ­stico","autÃªntico","eclÃ©tico","crÃ­tico","critico"}},
+  # polÃªmico -> polÃªm
+  {"ico",4,"",{"tico","pÃºblico","explico"}},
+  # produtividade -> produt
+  {"ividade",5},
+  # profundidade -> profund
+  {"idade",4,"",{"autoridade","comunidade"}},
+  # aposentadoria -> aposentad
+  {"oria",4,"",{"categoria"}},
+  # existencial -> exist
+  {"encial",5},
+  # artista -> art
+  {"ista",4},
+  {"auta",5},
+  # maluquice -> maluc
+  {"quice",4,"c"},
+  # chatice -> chat
+  {"ice",4,"",{"cÃºmplice"}},
+  # demonÃ­aco -> demon
+  {"Ã­aco",3},
+  # decorrente -> decorr
+  {"ente",4,"",{"freqÃ¼ente","alimente","acrescente","permanente","oriente","aparente"}},
+  {"ense",5},
+  # criminal -> crim
+  {"inal",3},
+  # americano -> americ
+  {"ano",4},
+  # amÃ¡vel -> am
+  {"Ã¡vel",2,"",{"afÃ¡vel","razoÃ¡vel","potÃ¡vel","vulnerÃ¡vel"}},
+  # combustÃ­vel -> combust
+  {"Ã­vel",3,"",{"possÃ­vel"}},
+  {"vel",5,"",{"possÃ­vel","vulnerÃ¡vel","solÃºvel"}},
+  {"bil",3,"vel"},
+  # cobertura -> cobert
+  {"ura",4,"",{"imatura","acupuntura","costura"}},
+  {"ural",4},
+  # consensual -> consens
+  {"ual",3,"",{"bissexual","virtual","visual","pontual"}},
+  # mundial -> mund
+  {"ial",3},
+  # experimental -> experiment
+  {"al",4,"",{"afinal","animal","estatal","bissexual","desleal","fiscal","formal","pessoal","liberal","postal","virtual","visual","pontual","sideral","sucursal"}},
+  {"alismo",4},
+  {"ivismo",4},
+  {"ismo",3,"",{"cinismo"}}};
+
+# Step 6: Verb Suffix Reduction
+{  "Verb", 0, 0, {}, 
+  # cantarÃ­amo -> cant
+  {"arÃ­amo",2},
+  # cantÃ¡ssemo -> cant
+  {"Ã¡ssemo",2},
+  # beberÃ­amo -> beb
+  {"erÃ­amo",2},
+  # bebÃªssemo -> beb
+  {"Ãªssemo",2},
+  # partirÃ­amo -> part
+  {"irÃ­amo",3},
+  # partÃ­ssemo -> part
+  {"Ã­ssemo",3},
+  # cantÃ¡ramo -> cant
+  {"Ã¡ramo",2},
+  # cantÃ¡rei -> cant
+  {"Ã¡rei",2},
+  # cantaremo -> cant
+  {"aremo",2},
+  # cantariam -> cant
+  {"ariam",2},
+  # cantarÃ­ei -> cant
+  {"arÃ­ei",2},
+  # cantÃ¡ssei -> cant
+  {"Ã¡ssei",2},
+  # cantassem -> cant
+  {"assem",2},
+  # cantÃ¡vamo -> cant
+  {"Ã¡vamo",2},
+  # bebÃªramo -> beb
+  {"Ãªramo",3},
+  # beberemo -> beb
+  {"eremo",3},
+  # beberiam -> beb
+  {"eriam",3},
+  # beberÃ­ei -> beb
+  {"erÃ­ei",3},
+  # bebÃªssei -> beb
+  {"Ãªssei",3},
+  # bebessem -> beb
+  {"essem",3},
+  # partirÃ­amo -> part
+  {"Ã­ramo",3},
+  # partiremo -> part
+  {"iremo",3},
+  # partiriam -> part
+  {"iriam",3},
+  # partirÃ­ei -> part
+  {"irÃ­ei",3},
+  # partÃ­ssei -> part
+  {"Ã­ssei",3},
+  # partissem -> part
+  {"issem",3},
+  # cantando -> cant
+  {"ando",2},
+  # bebendo -> beb
+  {"endo",3},
+  # partindo -> part
+  {"indo",3},
+  # propondo -> prop
+  {"ondo",3},
+  # cantaram -> cant
+  {"aram",2},
+  {"arÃ£o",2},
+  # cantarde -> cant
+  {"arde",2},
+  # cantarei -> cant
+  {"arei",2},
+  # cantarem -> cant
+  {"arem",2},
+  # cantaria -> cant
+  {"aria",2},
+  # cantarmo -> cant
+  {"armo",2},
+  # cantasse -> cant
+  {"asse",2},
+  # cantaste -> cant
+  {"aste",2},
+  # cantavam -> cant
+  {"avam",2,"",{"agravam"}},
+  # cantÃ¡vei -> cant
+  {"Ã¡vei",2},
+  # beberam -> beb
+  {"eram",3},
+  {"erÃ£o",3},
+  # beberde -> beb
+  {"erde",3},
+  # beberei -> beb
+  {"erei",3},
+  # bebÃªrei -> beb
+  {"Ãªrei",3},
+  # beberem -> beb
+  {"erem",3},
+  # beberia -> beb
+  {"eria",3},
+  # bebermo -> beb
+  {"ermo",3},
+  # bebesse -> beb
+  {"esse",3},
+  # bebeste -> beb
+  {"este",3,"",{"faroeste","agreste"}},
+  # bebÃ­amo -> beb
+  {"Ã­amo",3},
+  # partiram -> part
+  {"iram",3},
+  # concluÃ­ram -> conclu
+  {"Ã­ram",3},
+  {"irÃ£o",2},
+  # partirde -> part
+  {"irde",2},
+  # partÃ­rei -> part
+  {"irei",3,"",{"admirei"}},
+  # partirem -> part
+  {"irem",3,"",{"adquirem"}},
+  # partiria -> part
+  {"iria",3},
+  # partirmo -> part
+  {"irmo",3},
+  # partisse -> part
+  {"isse",3},
+  # partiste -> part
+  {"iste",4},
+  {"iava",4,"",{"ampliava"}},
+  # cantamo -> cant
+  {"amo",2},
+  {"iona",3},
+  # cantara -> cant
+  {"ara",2,"",{"arara","prepara"}},
+  # cantarÃ¡ -> cant
+  {"arÃ¡",2,"",{"alvarÃ¡"}},
+  # cantare -> cant
+  {"are",2,"",{"prepare"}},
+  # cantava -> cant
+  {"ava",2,"",{"agrava"}},
+  # cantemo -> cant
+  {"emo",2},
+  # bebera -> beb
+  {"era",3,"",{"acelera","espera"}},
+  # beberÃ¡ -> beb
+  {"erÃ¡",3},
+  # bebere -> beb
+  {"ere",3,"",{"espere"}},
+  # bebiam -> beb
+  {"iam",3,"",{"enfiam","ampliam","elogiam","ensaiam"}},
+  # bebÃ­ei -> beb
+  {"Ã­ei",3},
+  # partimo -> part
+  {"imo",3,"",{"reprimo","intimo","Ã­ntimo","nimo","queimo","ximo"}},
+  # partira -> part
+  {"ira",3,"",{"fronteira","sÃ¡tira"}},
+  {"Ã­do",3},
+  # partirÃ¡ -> part
+  {"irÃ¡",3},
+  {"tizar",4,"",{"alfabetizar"}},
+  {"izar",5,"",{"organizar"}},
+  {"itar",5,"",{"acreditar","explicitar","estreitar"}},
+  # partire -> part
+  {"ire",3,"",{"adquire"}},
+  # compomo -> comp
+  {"omo",3},
+  # cantai -> cant
+  {"ai",2},
+  # cantam -> cant
+  {"am",2},
+  # barbear -> barb
+  {"ear",4,"",{"alardear","nuclear"}},
+  # cantar -> cant
+  {"ar",2,"",{"azar","bazaar","patamar"}},
+  # cheguei -> cheg
+  {"uei",3},
+  {"uÃ­a",5,"u"},
+  # cantei -> cant
+  {"ei",3},
+  {"guem",3,"g"},
+  # cantem -> cant
+  {"em",2,"",{"alem","virgem"}},
+  # beber -> beb
+  {"er",2,"",{"Ã©ter","pier"}},
+  # bebeu -> beb
+  {"eu",3,"",{"chapeu"}},
+  # bebia -> beb
+  {"ia",3,"",{"estÃ³ria","fatia","acia","praia","elogia","mania","lÃ¡bia","aprecia","polÃ­cia","arredia","cheia","Ã¡sia"}},
+  # partir -> part
+  {"ir",3,"",{"freir"}},
+  # partiu -> part
+  {"iu",3},
+  {"eou",5},
+  # chegou -> cheg
+  {"ou",3},
+  # bebi -> beb
+  {"i",3}};
+
+# Step 7: Vowel Removal 
+{  "Vowel", 0, 0, {}, 
+  {"bil",2,"vel"},
+  {"gue",2,"g",{"gangue","jegue"}},
+  {"Ã¡",3}, 
+  {"Ãª",3,"",{"bebÃª"}},
+  # menina -> menin
+  {"a",3,"",{"Ã¡sia"}},
+  # grande -> grand
+  {"e",3},
+  # menino -> menin
+  {"o",3,"",{"Ã£o"}}};
+  
+  # Step 8: Remove Accents
+  #....
